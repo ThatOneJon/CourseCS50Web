@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang ="en">
+
+
+<head>
+    <title>
+        Tasks
+    </title>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        //diable submit by default
+        document.querySelector('#submit').disabled = true;
+        // when key typed, enable submit button
+        document.querySelector('#task').onkeyup = () => {
+            if(document.querySelector('#task').value.length >0){
+                document.querySelector('#submit').disabled = false;
+        }else{
+            document.querySelector('#submit').disabled = true;
+        }
+    }
+        document.querySelector('form').onsubmit = () => {
+          const task = document.querySelector('#task').value;
+          console.log(task);
+            let li = document.createElement('li');
+            //inside the <li> taggs i want the task variable, which is the value of user input from id #task
+            li.innerHTML = task;
+                document.querySelector('#tasks').append(li);
+                document.querySelector('#task').value = "";
+            // disable submit again 
+                document.querySelector('#submit').disabled = true;
+          //stop form from submitting
+          return false;
+        }
+    });
+</script>
+</head>
+<body>
+    <h1>Tasks</h1>
+    <ul id ="tasks">
+    </ul>
+    <form>
+        <input id = "task" placeholder ="new Task" type ="text">
+        <input type ="submit" id ="submit">
+    </form>
+
+
+</body>
+
+
+
+
+
+
+
+</html>
+
+
+
+
+
+
+

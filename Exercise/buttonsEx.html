@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title></title>
+    <meta name="Viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+
+        let count = 0;
+        function counter() {
+            count ++;
+        }
+
+        function counter2(){
+            count --;
+        }
+
+    document.addEventListener('DOMContentLoaded',() => {
+    document.querySelector('#colorSelect').onchange = function () {
+    document.querySelector('#countClick').style.color = this.value;
+};
+});
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector("#button1").onclick = () => {
+                counter();
+                document.querySelector("h1").innerHTML = `counter: ${count}`;
+        },
+    
+            document.querySelector("#button2").onclick = () => {
+                if(count > 0) {
+                counter2();
+                document.querySelector("h1").innerHTML = `counter: ${count}`;
+                }else{
+                    document.querySelector("h1").innerHTML ="Cannot go below 0";
+                }
+            }});
+            
+
+
+        </script>
+    
+    
+</head>
+<body>
+    <h1 id ="countClick">Click - count: </h1>
+    <h2 id="two">cool</h2>
+    <button id ="button1">
+        click!
+    </button>
+
+    <button id = "button2">
+        Click!
+    </button>
+
+    <select id="colorSelect">
+        <option value="black">-</option>
+        <option value="red">RED</option>
+        <option value="blue">BLUE</option>
+        <option value="green">BLACK</option>
+    </select>
+
+
+</body>
+</html>
