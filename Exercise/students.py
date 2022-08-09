@@ -48,5 +48,16 @@ def main():
     print(randRoom.squareFeet())
     print(randRoom.price(10))
 
+    sentence = "a big cow"
+    list1 = [i for i in sentence]
+    list2 = [1,2,3,4,5]
+    list2square = list(map(lambda s:s*s, list2))
+    list3 = filter(lambda c : c%4==0, list2square)
+    print(list1)
+    print(list2square)
+    print(list(list3))
+
+
+
 if __name__ == "__main__":
     main()
