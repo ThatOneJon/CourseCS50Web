@@ -56,6 +56,50 @@ def main():
     print(list1)
     print(list2square)
     print(list(list3))
+    print(testAsc([4,3,2,1]))
+
+
+    j = -123
+    print(rev(j))
+    print(codeA("Big light cow"))
+
+
+def rev(j):
+    if j<0:
+        j = "".join(reversed(str(j)))
+        j = j.rstrip(j[-1])
+        return 0-(int(j))
+
+
+    else: 
+        j = "".join(reversed(str(j)))
+        return int(j)
+
+
+def testAsc(a):
+    
+    b = sorted(a, reverse = False)
+    if a == b:
+        return "Asc order"
+
+    elif a == sorted(a, reverse = True):
+        return "Desc order"
+    else:
+        return "No order"
+
+    print(a)
+
+
+def codeA(c):
+    li = c.split(" ")
+    alpha = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+    res = list()
+    for _ in li:
+        _ = _.lower()
+        lis = [i for i in _]
+        lis2 = list(map(lambda s : ' '.join(alpha[alpha.index(s) + 2]), lis ))
+        res.append("".join(lis2))
+    return " ".join(res)
 
 
 
