@@ -1,4 +1,5 @@
 import random
+import math
 
 
 def main():
@@ -7,8 +8,13 @@ def main():
     #fizzBuzz()
     #print(addNumbers([5,6,10], [5,8,19], [10, 12, 3, 18]))
     #monkeyAuthor()
-    mastermind()
+    #mastermind()
+    #squared()
+    try:
+        passwordGenerator(int(input("How long?")))
 
+    except ValueError:
+        print("input an integer!")
 
 def starTriangle(n):
     res = "*"
@@ -113,6 +119,49 @@ def mastermind():
             print(f'Result: {"".join(output)} yout have {counter} left')
             
 
+def squared():
+
+    a = [2,8,3,5,4]
+    b = [4,64,9,25,33]
+
+    if len(a) != len(b):
+        print("Not same length")
+
+    c =  list(map(lambda i: i**2, a))
+    print(c)
+
+    if b == c:
+        print("is true")
+    else:
+        print("not so much")
+
+
+
+
+def passwordGenerator(i):
+    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    alphaList = {}
+    for num, val in enumerate(alphabet):
+        alphaList[num] = val
+
+    sonderz = "$%&/-:@?!"
+    passw = []
+
+    for _ in range(0,i):
+        j = random.randrange(0,3)
+        if j == 1:
+            n = random.randrange(0, 52)
+            c = alphaList[n]
+        elif j == 2:
+            n = random.randrange(0, 9)
+            c = str(n)
+        else:
+            n = random.randrange(0, 9)
+            c = sonderz[n]
+        passw.append(str(c))
+
+
+    print(f"The password is:   {''.join(passw)}   it has {i} symbols" )
 
 if __name__ == "__main__":
     main()
