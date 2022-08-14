@@ -10,11 +10,14 @@ def main():
     #monkeyAuthor()
     #mastermind()
     #squared()
-    try:
-        passwordGenerator(int(input("How long?")))
+    #try:
+     #   passwordGenerator(int(input("How long?")))
 
-    except ValueError:
-        print("input an integer!")
+    #except ValueError:
+      #  print("input an integer!")
+
+    shadowSentences()
+
 
 def starTriangle(n):
     res = "*"
@@ -162,6 +165,29 @@ def passwordGenerator(i):
 
 
     print(f"The password is:   {''.join(passw)}   it has {i} symbols" )
+
+
+
+def shadowSentences():
+    inp = ("tttt" , "your")
+    a = inp[0]
+    b = inp[1]
+    c = bool()
+
+    for _ in a.replace(" ",""):
+        if _ in b.replace(" ", ""):
+            c =False
+            break
+        else:
+            c = True
+    
+    if c:
+        print("shadow")
+    else:
+        print("no shadow")
+
+
+        
 
 if __name__ == "__main__":
     main()
