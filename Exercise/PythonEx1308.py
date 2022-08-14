@@ -16,8 +16,8 @@ def main():
     #except ValueError:
       #  print("input an integer!")
 
-    shadowSentences()
-
+    #shadowSentences()
+    difference()
 
 def starTriangle(n):
     res = "*"
@@ -187,7 +187,17 @@ def shadowSentences():
         print("no shadow")
 
 
-        
+
+def difference():
+    x = int(input("number plox:  "))
+    y = [int(i) for i in str(x)]
+    biggest = sorted(y, reverse = True)
+    smollest = sorted(y)
+    biggest = int("".join([str(_) for _ in biggest ]))
+    smollest = int("".join([str(_) for _ in smollest]))
+
+    print(f"The difference, between biggest: {biggest} and smallest {smollest} is :  {biggest - smollest}")
+
 
 if __name__ == "__main__":
     main()
