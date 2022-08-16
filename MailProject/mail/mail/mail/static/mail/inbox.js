@@ -53,17 +53,38 @@ function load_mailbox(mailbox) {
 
     emails.forEach( obj=> {
     const u = document.getElementById("emails-view");
-    let i = document.createElement("li");
-    i.innerHTML = `ID: ${obj.id} - Sender: ${obj.sender} - Subject: ${obj.subject} - FROM: ${obj.timestamp}`;
+    let i = document.createElement("div");
+    i.innerHTML = `<a href="#">ID: ${obj.id} - Sender: ${obj.sender} - Subject: ${obj.subject} - FROM: ${obj.timestamp}</a>`;
+    i.style.border = "solid black 2px";
+    i.style.marginTop = "10px";
+      if(obj.read === true){
+        i.style.backgroundColor = "lightgrey";
+      }else{
+        i.style.backgroundColor = "white";
+
+      }
     u.appendChild(i);
+
     })
   });
-
-
-
   // Show the mailbox name
   document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
+}
 
 
-  
+function viewMail(mailbox){
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelector("a").onclick = () => {
+    fetch('/emails/<int:email_id>',{
+      method: 'GET',
+      email_id: "25"
+
+    })
+    
+    .then(response =>response.json())
+    .then(d => {
+      console.log(d);
+    })
+  };
+  })
 }
