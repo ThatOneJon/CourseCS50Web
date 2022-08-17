@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('#sent').addEventListener('click', () => load_mailbox('sent'));
   document.querySelector('#archived').addEventListener('click', () => load_mailbox('archive'));
   document.querySelector('#compose').addEventListener('click', compose_email);
-
   // By default, load the inbox
     load_mailbox('inbox');
 });
@@ -54,9 +53,10 @@ function load_mailbox(mailbox) {
     emails.forEach( obj=> {
     const u = document.getElementById("emails-view");
     let i = document.createElement("div");
-    i.innerHTML = `<a href="#">ID: ${obj.id} - Sender: ${obj.sender} - Subject: ${obj.subject} - FROM: ${obj.timestamp}</a>`;
+    i.innerHTML = `<button class="mail" onclick=viewMail(${obj.id})>ID: ${obj.id} - Sender: ${obj.sender} - Subject: ${obj.subject} - FROM: ${obj.timestamp}</a>`;
     i.style.border = "solid black 2px";
     i.style.marginTop = "10px";
+
       if(obj.read === true){
         i.style.backgroundColor = "lightgrey";
       }else{
@@ -72,19 +72,19 @@ function load_mailbox(mailbox) {
 }
 
 
-function viewMail(mailbox){
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelector("a").onclick = () => {
-    fetch('/emails/<int:email_id>',{
-      method: 'GET',
-      email_id: "25"
+function viewMail(i){
+      fetch(`emails/${i}`)
+      .then(response =>response.json())
+      .then(data => {
+        console.log(data);
+   
 
-    })
+    document.querySelector('#emails-view').style.display = 'none';
+    document.querySelector('#compose-view').style.display = 'none';
+    document.querySelector('#one-mail').style.display = 'block';
+    document.getElementById("sender").innerHTML = `This Mail is from: ${data.sender} <br> to: ${data.recipients}`;
+    document.getElementById("subj").innerHTML = data.subject;
+    document.getElementById("text").innerHTML = data.body;
     
-    .then(response =>response.json())
-    .then(d => {
-      console.log(d);
-    })
-  };
   })
 }
