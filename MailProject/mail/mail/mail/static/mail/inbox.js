@@ -14,6 +14,8 @@ function compose_email() {
   // Show compose view and hide other views
   document.querySelector('#emails-view').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'block';
+  document.querySelector('#one-mail').style.display = 'none';
+
 
   // Clear out composition fields
   document.querySelector('#compose-recipients').value = '';
@@ -43,6 +45,7 @@ function load_mailbox(mailbox) {
   // Show the mailbox and hide other views
   document.querySelector('#emails-view').style.display = 'block';
   document.querySelector('#compose-view').style.display = 'none';
+  document.querySelector('#one-mail').style.display = 'none';
 
   fetch('/emails/inbox')
   .then(response => response.json())
@@ -85,6 +88,24 @@ function viewMail(i){
     document.getElementById("sender").innerHTML = `This Mail is from: ${data.sender} <br> to: ${data.recipients}`;
     document.getElementById("subj").innerHTML = data.subject;
     document.getElementById("text").innerHTML = data.body;
-    
+
+    let b = document.createElement("button");
+    b.innerHTML = "Archive"
+    b.onclick = archiveMail(data.id);
+    document.getElementById("one-mail").appendChild(b);
+          
+  })
+}
+
+function archiveMail(j){
+fetch(`/emails/${j}`, {
+  method:"PUT",
+  body: JSON.stringify({
+  archived: true
+  })
+}) 
+.then(response =>response)
+.then(res => {
+    console.log(res);
   })
 }
