@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <title>This is the Title</title>
+    <meta name ="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 20vh;
+            width: 100vw;
+        }
+        p {
+            display: block;
+            text-align: justify;
+        }
+        #article{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 500px;
+        }
+
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelector("#button1").onclick = () => {
+                document.querySelector("#article").innerHTML  = "HELLO";
+                document.body.style.backgroundColor = 'lightgrey';
+                document.getElementById("test").style.backgroundColor = "blue";
+            }
+        });
+    </script>
+</head>
+
+<body>
+
+    <div class ="container" id ="test">
+        <h1>I am the main headline</h1>
+        <div id = "article">
+            <h2>I am the Article Headline</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis ea id autem, molestias nulla, dignissimos obcaecati laboriosam consequatur ex aspernatur earum? Blanditiis nulla esse dicta? Omnis inventore quisquam earum consectetur.</p>
+            <button id = "button1">I AM A BUTTON!</button>
+        </div>
+    </div>
+
+</body>
+</html>

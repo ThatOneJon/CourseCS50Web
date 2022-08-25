@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang ="en">
+<head>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <title>React Ex</title>
+    <meta name ="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+    <div id ="main">
+    </div>
+</body>
+
+<script type="text/babel">
+    function Game(){
+        // const[num1, setnum1] = React.useState(1);
+        // can also be written as an Object (dict)
+
+        const[state, setState] = React.useState({
+            num1: 1,
+            num2: 2,
+            score:0,
+            response:"" // String atm --> connected to an input field via value
+
+
+        });
+        function update(event){
+            //accepts the event as input
+            setState({
+                ...state, // spread operator in JS -> this keeps all state values the same, but the following
+                response: event.target.value // the value of the "event" -> the INput becomes the response -> number is stored in state
+
+            });
+        }
+
+        function inputV(event){
+            //check which key was pressed
+            if(event.key === "Enter"){
+                const answer = parseInt(state.response);
+                //parse input to an int to make values comperable
+                if (state.num1 * state.num2 === answer){
+                    //to update the score, you have to call setstate function ----> score =+ 1  ....doesn t work
+                    setState({
+                        ...state,
+                        score: state.score + 1
+                    });
+
+                }else{
+                    setState({
+                        ...state,
+                        score: state.score - 1
+                    });
+
+                }
+            }
+            
+        }
+        return( 
+            //onChange to make the input field Changeable, through the function update !
+            <div>
+                <h1>The score is:  {state.score}</h1>
+                <h1>What is:   {state.num1} * {state.num2} </h1>
+                <input onKeyPress={inputV} onChange={update} value ={state.response} placeholder="Make an input"/>
+            </div>
+            // second event handler on key press, should find wether enter was pressed     onKeyPress   ---mind capitalization
+        );
+    }
+
+ReactDOM.render(<Game />, document.querySelector("#main"));
+</script>
+
+
+
+
+
+
+
+
+
+</html>
