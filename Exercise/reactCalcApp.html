@@ -6,6 +6,25 @@
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <title>React Ex</title>
     <meta name ="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+    h1{
+        text-align: center;
+        font-size: 40px;
+    }
+
+    input{
+        text-align: center;
+    }
+
+    #main{
+        display: flex;
+        justify-content: center;
+        margin-top: 10%;
+    }
+
+</style>
+
 </head>
 <body>
 
@@ -43,16 +62,18 @@
                 if (state.num1 * state.num2 === answer){
                     //to update the score, you have to call setstate function ----> score =+ 1  ....doesn t work
                     setState({
-                        ...state,
+                        num1: Math.floor(Math.random()*10),
+                        num2: Math.floor(Math.random()*10),
+                        response:"",
                         score: state.score + 1
                     });
 
                 }else{
                     setState({
                         ...state,
-                        score: state.score - 1
+                        score: state.score - 1,
+                        response:"",
                     });
-
                 }
             }
             

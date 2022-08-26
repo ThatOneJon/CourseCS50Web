@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    .one{
+        display: grid;
+        grid-template-columns: repeat(2, 13vw );
+        width: 30vw;
+    }
+    button{
+        padding: 10px;
+        margin: 5px;
+        font-weight: bold;
+        font-size: 1.3em;
+    }
+    #mainApp{
+        display: flex;
+        justify-content: center;
+        background-color: lightblue;
+    }
+
+    body{
+        width: 100vw;
+    }
+    h1{
+        text-align: center;
+    }
+
+</style>
+</head>
+
+<body>
+    <div id="mainApp">
+    </div>
+
+
+<script type="text/babel">
+
+
+function Quizz(){
+
+    const[state1, setState1] = React.useState({
+        question1:"",
+        question2:"",
+        question3:"",
+        question4:"",
+        questionTop:"This is where the question would go!",
+    });
+
+    function changeColor(){
+            setState1({
+            ...state1,
+            questionTop: "Not it"
+        });
+    }
+
+    return(
+        <div className="one">
+            <h1>{state1.questionTop}</h1>,
+            <button onClick={changeColor}>Antwort: {state1.question1}</button>    
+            <button>Antwort: {state1.question2}</button>    
+            <button>Antwort: {state1.question3}</button>    
+            <button>Antwort: {state1.question4}</button>    
+        </div>
+    );
+}
+ReactDOM.render(<Quizz />, document.querySelector("#mainApp"));
+</script>
+
+</body>
+</html>
