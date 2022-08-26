@@ -86,27 +86,32 @@ function viewMail(i){
     document.querySelector('#emails-view').style.display = 'none';
     document.querySelector('#compose-view').style.display = 'none';
     document.querySelector('#one-mail').style.display = 'block';
+
     document.getElementById("sender").innerHTML = `This Mail is from: ${data.sender} <br> to: ${data.recipients}`;
     document.getElementById("subj").innerHTML = data.subject;
     document.getElementById("text").innerHTML = data.body;
 
-    let b = document.createElement("button");
-    b.innerHTML = "Archive"
-    b.onclick = archiveMail(data.id);
-    document.getElementById("one-mail").appendChild(b);
+    document.getElementById("archive").addEventListener('click', event => {archiveMail(data.id)});
+    document.getElementById("unArchive").addEventListener('click', event => { 
+      fetch(`/emails/${data.id}`, {
+        method:"PUT",
+        body: JSON.stringify({
+        archived: false
+        })
+      })
+
+    });
           
   })
 }
 
 function archiveMail(j){
+  console.log("Does this work?")
 fetch(`/emails/${j}`, {
   method:"PUT",
   body: JSON.stringify({
   archived: true
   })
 }) 
-.then(response =>response)
-.then(res => {
-    console.log(res);
-  })
 }
+
