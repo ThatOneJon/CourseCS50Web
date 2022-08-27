@@ -91,6 +91,7 @@ function viewMail(i){
     document.getElementById("subj").innerHTML = data.subject;
     document.getElementById("text").innerHTML = data.body;
 
+    document.getElementById("delete").addEventListener('click', () => {reply_email(data)});        
     document.getElementById("archive").addEventListener('click', event => {archiveMail(data.id)});
     document.getElementById("unArchive").addEventListener('click', event => { 
       fetch(`/emails/${data.id}`, {
@@ -99,12 +100,11 @@ function viewMail(i){
         archived: false
         })
       })
-
+      location.reload()
     });
           
   })
 }
-
 function archiveMail(j){
   console.log("Does this work?")
 fetch(`/emails/${j}`, {
@@ -113,5 +113,35 @@ fetch(`/emails/${j}`, {
   archived: true
   })
 }) 
+location.reload()
 }
 
+
+function reply_email(i) {
+
+  // Show compose view and hide other views
+  document.querySelector('#emails-view').style.display = 'none';
+  document.querySelector('#compose-view').style.display = 'block';
+  document.querySelector('#one-mail').style.display = 'none';
+
+
+  // Clear out composition fields
+  document.querySelector('#compose-recipients').value = i.sender;
+  document.querySelector('#compose-subject').value = `RE: ${i.subject}`;
+  document.querySelector('#compose-body').value = `${i.sender} wrote this: ${i.body}`;
+
+  document.addEventListener("submit", () => {
+  fetch('/emails',{
+    method: 'POST',
+    body: JSON.stringify({
+      recipients : "jon@doe.com",
+      subject : document.getElementById("compose-subject").value,
+      body : document.getElementById("compose-body").value
+    })
+  })
+  .then(response => response.json())
+  .then(result => {
+    // Print result
+    console.log(result);
+}) });
+}
