@@ -1,0 +1,19 @@
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+}
+
+.body{
+    margin-top: 5vh;
+    width: 30vw;
+    height: 40vh;
+}
+
+
+#writePost{
+    text-align: center;
+}
