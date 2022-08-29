@@ -8,7 +8,16 @@ from .models import User, Posts
 
 
 def index(request):
-    return render(request, "network/index.html")
+
+    posts = Posts.objects.all()
+    postDicts =[]
+    for _ in posts:
+        postDicts.append(_.dict())
+# use the dict() method of Posts on each Object and put em in the postDicts list of dicts
+
+    return render(request, "network/index.html",{
+        "posts":postDicts
+    })
 
 
 def login_view(request):
@@ -64,16 +73,20 @@ def register(request):
 
 #function to write a new Post to the sqlite Database -> if method is post or to show the form to create a post, if not
 def newPost(request):
-    if request.method == "POST":
-        headlineC = request.POST["headline"]
-        content = request.POST["content"]
-        current_User = request.user.id
-        post = Posts(poster=User.objects.get(id=current_User), headline=headlineC, body= content, created=True)
-        post.save()
+    # only render this view, if the user is logged in! ------------------
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            headlineC = request.POST["headline"]
+            content = request.POST["content"]
+            current_User = request.user.id
+            post = Posts(poster=User.objects.get(id=current_User), headline=headlineC, body= content, created=True)
+            post.save()
 
-        return render(request, "network/index.html")
+            return HttpResponseRedirect(reverse("index"))
+
+        else:
+            return render(request, "network/newPost.html")
 
     else:
-        return render(request, "network/newPost.html")
-
-
+            return HttpResponseRedirect(reverse("index"))
+        #if not logged in -> redirect to index

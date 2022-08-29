@@ -14,5 +14,11 @@ class Posts(models.Model):
     likes = models.IntegerField(null=True, default = 0)
     created = models.DateTimeField(auto_now_add = True, auto_created=True, blank=True)
 
+#function returns dict of Object, to Key access all values
+    def dict(self):
+        return self.__dict__
+
+
+#function returns string representation of Object, mostly for Admin - site 
     def __str__(self):
         return f"Poster:{self.poster} Headline:{self.headline} Content:{self.body} Likes:{self.likes} Timestamp:{self.created}"

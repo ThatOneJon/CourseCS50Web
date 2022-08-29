@@ -17,3 +17,24 @@ body{
 #writePost{
     text-align: center;
 }
+
+.posts{
+    background-color:rgb(189, 215, 224);
+    margin-top: 50px;
+    width: 50vw;
+    text-align: center;
+}
+
+#allPosts{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.postTitle{
+    border: solid black 3px;
+}
+
+.timestamps{
+    font-size: .7em;
+}

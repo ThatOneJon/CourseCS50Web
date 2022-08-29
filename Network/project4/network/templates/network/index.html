@@ -1,5 +1,17 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
-    TODO
+    <div id ="allPosts">
+    {% for i in posts %}
+    <div class ="posts">
+        <h2 class ="postTitle">{{ i.headline }}</h2>
+        <p>{{ i.body }}</p>
+        <h3> {{i.likes}} Likes</h3>
+        <button class ="likeB">I like!</button>
+        <p class ="timestamps">POSTED: {{ i.created }}</p>
+
+    </div>
+    {% endfor %}
+
+    </div>
 {% endblock %}
