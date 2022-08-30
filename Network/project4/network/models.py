@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class User(AbstractUser):
     pass
@@ -28,3 +29,18 @@ class UserProfile(models.Model):
     name = models.CharField(max_length=200, blank =True, null=True)
     birth_date = models.DateField(null = True, blank = True)
     followers = models.ManyToManyField(User, blank = True, related_name="followers")
+
+    def __str__(self):
+        return f"User:  {self.user}"
+
+#ADD SIGNAL in order to automatically create a User profile, when a User is created -> signal has to be imported
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
+
+#------------------------------------------------------------------------ receiver tells what to do, when signal is received

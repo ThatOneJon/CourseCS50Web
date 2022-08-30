@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Posts
+from .models import User, Posts, UserProfile
 
 
 def index(request):
@@ -93,7 +93,19 @@ def newPost(request):
 
 def profile(request, user):
 
-    return render(request, "network/profile.html", {
-        "name":request.user,
-        "followers": 0,
-    }) 
+    if request.method == "POST":
+        if request.value == "add":
+            profile = UserProfile.objects.get(user = request.user)
+            profile.followers.add(request.user)
+
+        else:
+            profile = UserProfile.objects.get(user = request.user)
+            profile.followers.remove(request.user)
+
+
+    else:
+        return render(request, "network/profile.html", {
+            "name":request.user,
+            "followers": 0,
+        }) 
+
