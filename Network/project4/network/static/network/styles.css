@@ -38,3 +38,17 @@ body{
 .timestamps{
     font-size: .7em;
 }
+
+#profilePic{
+    border-radius: 50%;
+    width: 40%;
+}
+
+
+#followButton{
+    width: 200px;
+    padding: 5px;
+    border-radius: 10%;
+    font-weight: bold;
+    box-shadow: 3px 2px black;
+}

@@ -90,3 +90,10 @@ def newPost(request):
     else:
             return HttpResponseRedirect(reverse("index"))
         #if not logged in -> redirect to index
+
+def profile(request, user):
+
+    return render(request, "network/profile.html", {
+        "name":request.user,
+        "followers": 0,
+    }) 

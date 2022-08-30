@@ -1,5 +1,9 @@
 {% extends "network/layout.html" %}
 
+{% load static %}
+<!-- Before loading the script in the bottom you have to load the static filer-->
+
+
 {% block body %}
     <div id ="allPosts">
     {% for i in posts %}
@@ -7,11 +11,16 @@
         <h2 class ="postTitle">{{ i.headline }}</h2>
         <p>{{ i.body }}</p>
         <h3> {{i.likes}} Likes</h3>
-        <button class ="likeB">I like!</button>
+        <button class ="likeB" >I like!</button>
         <p class ="timestamps">POSTED: {{ i.created }}</p>
 
     </div>
     {% endfor %}
-
     </div>
-{% endblock %}
+
+    {% endblock %}
+
+    {% block script %}
+    <script src="{% static 'network/base.js' %}"> </script>
+    {% endblock %}
+
