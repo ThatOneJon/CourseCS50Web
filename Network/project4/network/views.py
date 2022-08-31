@@ -111,12 +111,29 @@ def profile(request, user):
 
         JPosts = Posts.objects.filter(poster=User.objects.get(username=user))
         #get to return one parameter, use python filter to return multiple -> could user map to use a function on all 
-        print(JPosts[0])
         return render(request, "network/profile.html", {
             "realName":UserProfile.objects.get(user = User.objects.get(username=user)).name,
             #strange query, but it works -> gets id of User with fitting username and finds their name --- namer is the username from url --- fitting user not just currently logged in
-            "name":user,
+            "name":str(user),
+            "username":str(request.user),
+            #convert both to string, to make them comperable!
             "followers": 0,
             "posts": JPosts
         }) 
+
+def edit(request, post):
+    if request.method == "POST":
+        y = request.POST["new"]
+        x = Posts.objects.get(id = post)
+        x.body = y
+        x.save()
+        return HttpResponseRedirect(reverse("index"))
+
+    else:
+        getPost = Posts.objects.get(id=post)
+        return render(request, "network/profile.html", {
+            "Thispost":getPost,
+        })
+    
+
 
