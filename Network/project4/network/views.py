@@ -8,16 +8,19 @@ from .models import User, Posts, UserProfile
 
 
 def index(request):
+#Checking if logged in works with request, since the user is saved
+    if request.user.is_authenticated:
+        posts = Posts.objects.all()
+        postDicts =[]
+        for _ in posts:
+            postDicts.append(_.dict())
+    # use the dict() method of Posts on each Object and put em in the postDicts list of dicts
+        return render(request, "network/index.html",{
+            "posts": posts
+        })
+    else:
+        return render(request, "network/login.html")
 
-    posts = Posts.objects.all()
-    postDicts =[]
-    for _ in posts:
-        postDicts.append(_.dict())
-# use the dict() method of Posts on each Object and put em in the postDicts list of dicts
-
-    return render(request, "network/index.html",{
-        "posts":postDicts
-    })
 
 
 def login_view(request):
@@ -92,6 +95,7 @@ def newPost(request):
         #if not logged in -> redirect to index
 
 def profile(request, user):
+#USER is the value given from URL -> which is why the link brings you to real profile page
 
     if request.method == "POST":
         if request.value == "add":
@@ -104,8 +108,15 @@ def profile(request, user):
 
 
     else:
+
+        JPosts = Posts.objects.filter(poster=User.objects.get(username=user))
+        #get to return one parameter, use python filter to return multiple -> could user map to use a function on all 
+        print(JPosts[0])
         return render(request, "network/profile.html", {
-            "name":request.user,
+            "realName":UserProfile.objects.get(user = User.objects.get(username=user)).name,
+            #strange query, but it works -> gets id of User with fitting username and finds their name --- namer is the username from url --- fitting user not just currently logged in
+            "name":user,
             "followers": 0,
+            "posts": JPosts
         }) 
 

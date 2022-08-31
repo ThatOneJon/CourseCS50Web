@@ -52,3 +52,23 @@ body{
     font-weight: bold;
     box-shadow: 3px 2px black;
 }
+
+#profil{
+    text-align: center;
+    margin-top: 5vh;
+}
+#profInfo{
+    margin-bottom:10vh;
+}
+
+.post{
+    margin-bottom: 100px;
+    background-color: aliceblue;
+    padding-bottom: 50px;
+    width: 50vw;
+}
+#userPosts{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}

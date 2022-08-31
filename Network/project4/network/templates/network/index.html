@@ -3,12 +3,14 @@
 {% load static %}
 <!-- Before loading the script in the bottom you have to load the static filer-->
 
-
 {% block body %}
     <div id ="allPosts">
     {% for i in posts %}
     <div class ="posts">
         <h2 class ="postTitle">{{ i.headline }}</h2>
+        <p>@ <a href="{% url 'profile' i.poster.username %}"> {{i.poster.username}} </a> </p>
+        <!--user is a foreign key, so in this field all user infos from USER are inside -->
+
         <p>{{ i.body }}</p>
         <h3> {{i.likes}} Likes</h3>
         <button class ="likeB" >I like!</button>
@@ -17,8 +19,9 @@
     </div>
     {% endfor %}
     </div>
-
     {% endblock %}
+
+
 
     {% block script %}
     <script src="{% static 'network/base.js' %}"> </script>
