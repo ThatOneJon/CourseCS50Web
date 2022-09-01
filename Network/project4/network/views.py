@@ -97,21 +97,28 @@ def newPost(request):
         #if not logged in -> redirect to index
 
 def profile(request, user):
-#USER is the value given from URL -> which is why the link brings you to real profile page
 
+#USER is the value given from URL -> which is why the link brings you to real profile page
     if request.method == "POST":
-        if request.value == "add":
-            profile = UserProfile.objects.get(user = request.user)
-            profile.followers.add(request.user)
+
+        profile_user = UserProfile.objects.get(user_id=User.objects.get(username=user))
+    
+        if request.user in  profile_user.followers.all():
+            profile_user.followers.remove(User.objects.get(username=request.user))
 
         else:
-            profile = UserProfile.objects.get(user = request.user)
-            profile.followers.remove(request.user)
+            profile_user.followers.add(request.user)
+
+        profile_user.save()
+
+        return HttpResponseRedirect(reverse("index"))
 
 
     else:
-
+        profile_followers = UserProfile.objects.get(user_id=User.objects.get(username=user))
+        follow_fount = profile_followers.countfollow
         JPosts = Posts.objects.filter(poster=User.objects.get(username=user))
+
         #get to return one parameter, use python filter to return multiple -> could user map to use a function on all 
         return render(request, "network/profile.html", {
             "realName":UserProfile.objects.get(user = User.objects.get(username=user)).name,
@@ -119,8 +126,10 @@ def profile(request, user):
             "name":str(user),
             "username":str(request.user),
             #convert both to string, to make them comperable!
-            "followers": 0,
-            "posts": JPosts
+            "followers": follow_fount,
+            "posts": JPosts,
+            "username_query":User.objects.get(username=request.user),
+            "profile":profile_followers
         }) 
 
 def edit(request, post):
@@ -140,14 +149,13 @@ def edit(request, post):
 
 def like(request, postID):
     thisPost = Posts.objects.get(id=postID)
-    current_user = User.objects.filter(username=request.user)
-    print(thisPost.likes.all())
-
-    if request.user not in thisPost.likes.all():
-        thisPost.likes.set(current_user)
-
+    current_user = request.user
+    if current_user in thisPost.likes.all():
+        thisPost.likes.remove(current_user)
     else:
-        thisPost.likes.remove(request.user.id)
+        thisPost.likes.add(current_user)
+    
+    thisPost.save()
 
     
     like, created = Like.objects.get_or_create(user=request.user, post=Posts.objects.get(id=postID))
@@ -157,10 +165,10 @@ def like(request, postID):
             like.value="Unlike"
         else:
             like.value="Like"
-    
-    like.save()
 
-    
-    thisPost.save()
+    like.save()        
 
     return HttpResponseRedirect(reverse("index"))
+
+
+    

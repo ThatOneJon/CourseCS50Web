@@ -18,8 +18,11 @@
         {% if user not in i.likes.all %}
 
         <a href="{% url 'like' i.id%}"><button class ="likeB" >I like!</button></a>
+
         {% else %}
+
         <a href="{% url 'like' i.id%}"><button class ="likeB" >Unlike !</button></a>
+        
         {% endif %}
 
         <p class ="timestamps">POSTED: {{ i.created }}</p>
