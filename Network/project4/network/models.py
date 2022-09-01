@@ -11,12 +11,32 @@ class Posts(models.Model):
     poster = models.ForeignKey(User, on_delete=models.PROTECT)
     headline = models.CharField(max_length=100)
     body = models.CharField(max_length=400)
-    likes = models.IntegerField(null=True, default = 0)
     created = models.DateTimeField(auto_now_add = True, auto_created=True, blank=True)
+    likes = models.ManyToManyField(User, blank=True, default=None, related_name="liked")
+    
+    @property
+    def count(self):
+        return self.likes.all.count()
 
 #function returns dict of Object, to Key access all values
     def dict(self):
         return self.__dict__
+
+
+Like_Choices = (
+    ("Like","Like"),
+    ("Unlike","Unlike")
+)
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Posts, on_delete =models.CASCADE)
+    value= models.CharField(choices=Like_Choices, default= "Like", max_length=20)
+
+    def __str__(self):
+        return str(self.post)
+
+
+
 
 
 #function returns string representation of Object, mostly for Admin - site 
@@ -44,3 +64,4 @@ def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
 #------------------------------------------------------------------------ receiver tells what to do, when signal is received
+

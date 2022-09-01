@@ -12,8 +12,16 @@
         <!--user is a foreign key, so in this field all user infos from USER are inside -->
 
         <p>{{ i.body }}</p>
-        <h3> {{i.likes}} Likes</h3>
-        <button class ="likeB" >I like!</button>
+
+        <h3> {{i.likes.all.count}} Likes</h3>
+
+        {% if user not in i.likes.all %}
+
+        <a href="{% url 'like' i.id%}"><button class ="likeB" >I like!</button></a>
+        {% else %}
+        <a href="{% url 'like' i.id%}"><button class ="likeB" >Unlike !</button></a>
+        {% endif %}
+
         <p class ="timestamps">POSTED: {{ i.created }}</p>
 
     </div>

@@ -4,19 +4,21 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Posts, UserProfile
+from .models import User, Posts, UserProfile, Like
 
 
 def index(request):
 #Checking if logged in works with request, since the user is saved
+    posts = Posts.objects.all()
     if request.user.is_authenticated:
-        posts = Posts.objects.all()
         postDicts =[]
         for _ in posts:
             postDicts.append(_.dict())
+        user = request.user
     # use the dict() method of Posts on each Object and put em in the postDicts list of dicts
         return render(request, "network/index.html",{
-            "posts": posts
+            "posts": posts,
+            "user":user,
         })
     else:
         return render(request, "network/login.html")
@@ -136,4 +138,29 @@ def edit(request, post):
         })
     
 
+def like(request, postID):
+    thisPost = Posts.objects.get(id=postID)
+    current_user = User.objects.filter(username=request.user)
+    print(thisPost.likes.all())
 
+    if request.user not in thisPost.likes.all():
+        thisPost.likes.set(current_user)
+
+    else:
+        thisPost.likes.remove(request.user.id)
+
+    
+    like, created = Like.objects.get_or_create(user=request.user, post=Posts.objects.get(id=postID))
+
+    if not created:
+        if like.value == "Like":
+            like.value="Unlike"
+        else:
+            like.value="Like"
+    
+    like.save()
+
+    
+    thisPost.save()
+
+    return HttpResponseRedirect(reverse("index"))
