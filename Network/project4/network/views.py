@@ -170,5 +170,12 @@ def like(request, postID):
 
     return HttpResponseRedirect(reverse("index"))
 
+def following_Site(request):
+    users = UserProfile.objects.filter(followers=request.user)
+    context= {
+        "following":users
+    }
+
+    return render(request,"network/following.html", context)
 
     
